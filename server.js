@@ -9,10 +9,10 @@ const verificationData = {}; // 사용자 정보 임시 저장소
 const app = express();
 const PORT = 8080;
 const fs = require('fs'); // 새로 추가한 코드 
-const cors = require("cors"); // 11.30 수정,추가
-app.use(cors()); //11.30 수정,추가
+const cors = require("cors"); 
+app.use(cors()); 
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); //(11.29 추가)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
 
 // 새로 추가한 코드
 const uploadDir = path.join(__dirname, 'uploads');
@@ -128,7 +128,7 @@ app.post('/signup', (req, res) => {
     });
 });
 
-// 로그인 라우트 (이미 포함된 코드) - (수정한 코드!!)
+// 로그인 라우트 
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
     const query = 'SELECT * FROM customers WHERE email = ?';
@@ -175,7 +175,7 @@ app.post('/logout', (req, res) => {
     });
 });
 
-// 공지사항 목록 조회 API(추가)
+// 공지사항 목록 조회 API
 app.get('/api/notices', (req, res) => {
     const { page = 1, limit = 10, searchQuery = "", filterType = "all" } = req.query;
     const offset = (page - 1) * limit;
@@ -224,7 +224,7 @@ app.get('/api/notices', (req, res) => {
 
 
 
-// 공지사항 추가 API(추가)
+// 공지사항 추가 API
 app.post('/api/notices', upload.single('attachment'), (req, res) => {
     console.log('Received POST request to /api/notices');
     console.log('Form Data:', req.body);
@@ -256,7 +256,7 @@ app.post('/api/notices', upload.single('attachment'), (req, res) => {
 
 
 
-// 공지사항 삭제 API(11.30 수정)
+// 공지사항 삭제 API
 app.delete('/api/notices/:id', (req, res) => {
     const { id } = req.params;
     const query = 'DELETE FROM Notice WHERE id = ?';
@@ -301,7 +301,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// 공지사항 상세 API(수정)
+// 공지사항 상세 API
 app.get('/api/notices/:id', (req, res) => {
     const id = req.params.id;
 
@@ -340,7 +340,6 @@ app.get('/api/notices/:id', (req, res) => {
 
 
 
-//(11.29 수정,추가)
 app.post('/api/notices/:id/increment-views', (req, res) => { 
     const noticeId = req.params.id;
 
@@ -355,8 +354,6 @@ app.post('/api/notices/:id/increment-views', (req, res) => {
 });
 
 
-
-// 공지사항 수정 API (11.30 수정)
 // 공지사항 수정 API
 app.put('/api/notices/:id', upload.single('attachment'), (req, res) => {
     const { id } = req.params;
@@ -383,7 +380,7 @@ app.put('/api/notices/:id', upload.single('attachment'), (req, res) => {
 });
 
 
-// 업데이트 목록 조회 API(추가)
+// 업데이트 목록 조회 API
 app.get('/api/updates', (req, res) => {
     const { page = 1, limit = 10, searchQuery = "", filterType = "all" } = req.query;
     const offset = (page - 1) * limit;
@@ -426,7 +423,7 @@ app.get('/api/updates', (req, res) => {
 
 
 
-// 업데이트 글 작성 API (추가)
+// 업데이트 글 작성 API 
 app.post('/api/updates', upload.single('attachment'), (req, res) => {
     const { title, content, type } = req.body;
     const attachmentPath = req.file ? req.file.path : null; // 파일이 있을 경우 파일 경로 저장
@@ -448,7 +445,7 @@ app.post('/api/updates', upload.single('attachment'), (req, res) => {
 
 
 
-// 업데이트 상세 API(11.29 수정)
+// 업데이트 상세 API
 app.get('/api/updates/:id', (req, res) => {
     const updateId = req.params.id;
     const query = 'SELECT title, type, views, created_at, content, attachment FROM Updates WHERE id = ?';
@@ -1768,7 +1765,6 @@ app.post('/api/strategy-posts/:id/like', (req, res) => {
     );
 });
 
-//11.30(추가)
 app.get('/api/general-posts', (req, res) => { 
     const { page = 1, limit = 10, searchQuery = "" } = req.query;
     const offset = (page - 1) * limit;
