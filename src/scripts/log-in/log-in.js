@@ -19,7 +19,7 @@
      })
      .then(response => {
          if (response.ok) {
-             window.location.href = '/index.html';
+             window.location.href = '/public/index.html';
          } else {
              errorMessage.style.display = 'block';
              errorMessage.textContent = '아이디 또는 비밀번호가 틀립니다.';
